@@ -99,6 +99,13 @@ originally meant for release.
 **Build custom AI agents / integrate external services?** Yes — you'll be able to do almost
 anything.
 
+**Am I free to use, modify, and redistribute it however I want?** Yes.
+
+**How do I contribute?** Open a pull request.
+
+**Where can I ask questions or get help?** Join the Discord:
+[discord.gg/EYbsMwrhb2](https://discord.gg/EYbsMwrhb2).
+
 ## Components
 
 Backend services, agents, the ReID pipeline, and clients (glasses, phone, desktop) each live in
