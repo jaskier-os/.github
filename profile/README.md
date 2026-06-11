@@ -16,55 +16,43 @@ meant for people ready to keep building on top of it (or contribute later, if th
 
 ## What makes it different
 
-Rokid's software (daemons, services, apps) was almost completely removed in favor of better
-optimization and reliability. That means it is fully **incompatible** with Rokid's
-phone companion or CXR libraries — by design, to escape their technical debt.
+Built to be **forked and extended, not just used.** The whole stack was developed test-driven
+through scripts, so between the existing code and the per-device docs you have a real reference to
+build from — not a blank page. You can build almost anything on top of it: new glasses apps, new
+AI agents, new device tools, your own integrations.
 
-## Highlights
+Rokid's own software was almost entirely removed and replaced, so the system is fully
+**incompatible** with Rokid's phone companion or CXR libraries — by design, to escape their
+technical debt and give you a clean base to build on.
 
-**Glasses (rooted firmware + native daemons + Kotlin app)**
+## Features
 
-- **Custom rooted firmware** on the Qualcomm "neo" base — own `super_4.img` build (root,
-  SELinux-permissive), a bind-mount "DIY overlay" engine to swap apps without reflashing, and QDL
-  flash tooling.
-- **Own Bluetooth stack** replacing Rokid's — a privileged app wrapping the hidden A2DP-sink /
-  HFP reflection APIs, RFCOMM sockets, BLE wake, and auto-reconnect.
-- **Mic-array beamforming** — directional capture (cardioid "face the speaker", omni, conference)
-  via native audio scenes.
-- **On-device wake word** ("sireneviy") — custom-trained ONNX models with a full Python training
-  pipeline, Silero VAD, and speaker verification; inference offloaded to the Hexagon DSP via a
-  custom SoundTrigger HAL.
-- **Night-vision** UNet model powering a Night Vision tab.
-- **Native power daemon** — fold/take-off suspend (s2idle), screen timeout, battery-charge LED.
-- **Touchpad daemon** — grabs the PSoC touchpad and re-emits velocity-scaled scroll; suppresses
-  Rokid's accidental AI triggers. Plus camera/HUD capture service, RGBW LED control, and a
-  WiFi-P2P file/log sync server.
+**On the glasses, hands-free**
 
-**Phone (Kotlin companion)**
+- **Voice AI assistant** — wake-word or button activated; ask questions and run actions hands-free
+  on the HUD.
+- **Real-time two-way translation** — translates a live conversation in both directions, on the
+  glasses and the phone.
+- **Copilot** — an always-on conversation assistant that follows along and surfaces helpful cards.
+- **Teleprompter** — scrolling script on the HUD.
+- **Navigation** — turn-by-turn with a minimap, journey planning, transit steps, and ETA, using
+  both **Google Maps** and **Yandex Maps**.
+- **Capture** — photos, video, and AR-screen recordings by voice.
+- **Person recognition** — identify people via face/gait.
 
-- **Relay hub** — the glasses reach the backend *through* the phone, with WebRTC video/desktop
-  relay and head-motion → Bluetooth-HID mouse control.
-- **Navigation engine** with both **Google** and **Yandex** maps — journey planning, transit
-  steps, ETA, and a glasses minimap HUD.
+**Through the phone companion**
 
-**Assistant & AI**
+- **Desktop & mouse control** — drive a desktop over WebRTC, including head-motion → mouse.
+- **AI chat** — full conversation UI, with a photo you just took auto-attached to your question.
+- **Notifications, alarms, to-dos, and scheduled autonomous "jobs"** the assistant runs for you.
+- **Telegram** — read and act on your messages by voice.
 
-- **Agentic, voice-invokable device tools** — navigation/journeys, scheduled autonomous "jobs",
-  alarms, todos, photo/audio/video + AR capture, live translation, person recognition, Telegram.
-- **Real-time two-way translation** using two mics (inner = you, outer = the other person) with
-  dual phone + glasses displays; a teleprompter; and an always-on "Copilot" conversation assistant.
-- **Photo-grounded chat** — a photo taken in the last minute auto-attaches to your spoken query.
+**Built to extend**
 
-**Backend & infra (self-hosted)**
-
-- **Orchestrator** with LLM intent classification; agents self-register over outbound WebSocket —
-  no redeploy to add one. Agents: web-search, vision, clickup, security, chat-history, ReID, and a
-  PC agent (natural-language → shell + remote control).
-- **Speech/vision**: NLLB-200 translation, faster-whisper + Anthropic STT, Kokoro (EN) +
-  Tera/GLaDOS (RU) TTS routed by language, OCR.
-- **ReID pipeline**: YOLOv8 + SCRFD + ArcFace + OpenGait with FAISS matching — person/face/gait
-  recognition and a recognized-people dashboard.
-- **Self-hosted k3s** with an in-cluster registry, GitLab CI (buildx), and Flux GitOps.
+- **Add your own AI agents** — they self-register with the orchestrator; no redeploy to add one.
+- **Multi-language** — English and Russian speech in/out, plus on-device translation.
+- **Fully self-hosted** — your own backend and keys; nothing phones home except the AI models and
+  map APIs you choose.
 
 ## For developers — FAQ
 
