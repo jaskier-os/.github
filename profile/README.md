@@ -1,5 +1,3 @@
-# jaskier-os
-
 ### Wanted to have Rokid's hardware with full access and custom software? This is your stop.
 
 A full custom OS and assistant stack built on top of Rokid AR glasses — with **root access** and
